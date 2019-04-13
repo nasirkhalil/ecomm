@@ -1,0 +1,36 @@
+  <style type="text/css" media="screen">
+  	.bgimg {
+    background-image: url(assets/images/Fresh-Veg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+select option {
+    /*margin: 40px;*/
+    /*background: SteelBlue;*/
+    /*color: #fff;*/
+    font-size: 18px;
+}
+  </style>
+  <div class="bgimg">
+    <section>
+        <div class="wrap-slick1">
+            <div class="slick1">
+                <div class="item-slick1 item2-slick1" >
+                    <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                    	<!-- <p>testing testing testing testing testing</p> -->
+                    	<div class="form-group col-sm-3">
+									    	  <select class="form-control custom-select" (change)="selectLanguage()">
+									    	    <option value="">--Select Language--</option>
+									    	    <option value="english">English</option>
+									    	    <option value="arabic">Arabic</option>
+									    	  </select>
+									    	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>

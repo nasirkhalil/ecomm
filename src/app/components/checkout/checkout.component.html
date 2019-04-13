@@ -1,0 +1,102 @@
+<app-header></app-header>
+<section class="bgwhite p-t-0 p-b-60">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7 p-b-30">
+				<div class="p-r-20 p-r-0-lg p-t-83">
+					<div class="alert alert-success" [hidden]="orderstatus">
+						<b>Thank you for shopping with us.</b> <br> <br>
+						Your order has been placed successfully.<br> <br> One of our correspondent will get back to you soon.<br> <br> {{ message }}
+					</div>
+					<table class="table" [hidden]="!orderstatus">
+						<tr class="table-head">
+							<!--<th class="column-1"></th>-->
+							<th class="column-2">Product</th>
+							<th class="column-3">Price</th>
+							<th class="column-4 p-l-70">Quantity</th>
+							<th class="column-5">Total</th>
+						</tr>
+
+						<tr class="table-row" *ngFor="let item of this.mainservice.cartdata; let i = index">
+							<!--<td class="column-1">
+								<div class="cart-img-product b-rad-4 o-f-hidden">
+									<img src="{{ image_url }}assets/images/{{ item.product_image}}" alt="IMG-PRODUCT">
+								</div>
+							</td>-->
+							<td>{{ item.product_name }}</td>
+							<td>{{ item.product_price | currency }}</td>
+							<td>{{ this.mainservice.cartdata[i].cartquantity }}</td>
+							<td>{{ item.product_price*item.cartquantity | currency }}</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="center"><b>Total :</b></td>
+							<td>{{ totalAmount | currency }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="col-md-5 p-b-30" [hidden]="!orderstatus">
+				<form #checkoutFrm = "ngForm" (ngSubmit) = "checkoutFrm.form.valid && submitFrm(checkoutFrm.value)" novalidate>
+					<h4 class="m-text26 p-b-36 p-t-15">
+						Checkout
+					</h4>
+					<span *ngIf="name.invalid && (name.dirty || name.touched  || checkoutFrm.submitted)"
+						class="alert alert-danger">
+						This is required.
+					</span>
+
+					<div class="bo4 of-hidden size15 m-b-20">
+
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" id="name" placeholder="Full Name" required [(ngModel)]="checkoutFrm.name" #name="ngModel" autocomplete="off">
+					</div>
+					<span *ngIf="phone.invalid && (phone.dirty || phone.touched || checkoutFrm.submitted)"
+						class="alert alert-danger">
+						This is required.
+					</span>
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="phone" name="phone" placeholder="Phone Number" required [(ngModel)]="checkoutFrm.phone" #phone="ngModel" autocomplete="off">
+					</div>
+
+
+					<!--<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="email" placeholder="Email Address">
+					</div>-->
+					<span *ngIf="address.invalid && (address.dirty || address.touched || checkoutFrm.submitted)"
+						class="alert alert-danger">
+						This is required.
+					</span>
+					<div class="bo4 of-hidden size15 m-b-20">
+							<textarea class="sizefull s-text7 p-l-22 p-r-22" id="address" name="address" placeholder="Address" [(ngModel)]="checkoutFrm.address" #address="ngModel" autocomplete="off" required></textarea>
+					</div>
+					<span *ngIf="deliverytype.invalid && (deliverytype.dirty || deliverytype.touched || checkoutFrm.submitted)"
+						class="alert alert-danger">
+						This is required.
+					</span>
+					<div class="bo4 of-hidden size15 m-b-20">
+						<select name="deliverytype" id="deliverytype" [(ngModel)]="checkoutFrm.deliverytype" #deliverytype="ngModel" class="sizefull s-text7 p-l-22 p-r-22" (change)="showField()">
+							<option value="">--Delivery--</option>
+							<option value="ASAP">ASAP</option>
+							<option value="Date_and_time">Time and Day</option>
+						</select>
+					</div>
+					<div [hidden]="deliverytype.value != 'Date_and_time'" class="bo4 of-hidden size15 m-b-20">
+						<!-- <input class="sizefull s-text7 p-l-22 p-r-22" type="datetime-local" id="d_date_time" name="d_date_time" placeholder="Day and time" required  autocomplete="off">-->
+						<input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date Time" id="d_date_time" name="d_date_time" class="sizefull s-text7 p-l-22 p-r-22" [(ngModel)]="dateTime">
+						<owl-date-time #dt1></owl-date-time> 
+						<input type="hidden" name="formated_date" value="{{ dateTime | date: 'yyyy/MM/dd H:m:ss'  }}">
+					</div>
+					<!--<input type="text" value="{{ dateTime | date: 'yyyy/MM/dd H:m:ss'  }}" placeholder="testing testing testing" [(ngModel)]="dateTime" class="sizefull s-text7 p-l-22 p-r-22" name="formated_date">-->
+					<div class="w-size25">
+					<!--	 Button -->
+						<!--<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+							Confirm
+						</button> -->
+						<input type="submit" [hidden]="frm_loading"  value="Confirm" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<app-footer></app-footer>
